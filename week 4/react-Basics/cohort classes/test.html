@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  
+</head>
+
+<body>
+  <input type="text" id="title" placeholder="Todo title"></input> <br /><br />
+  <input type="text" id="description" placeholder="Todo description"></input> <br /><br />
+  <!-- <button onclick="addTodo()">Add todo</button> -->
+
+  <div id="container">
+
+  </div>
+</body>
+<script>
+    let globalId = 1;
+    function addTodo(){
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const parent = document.getElementById("container");
+        parent.appendChild(createChild(title, description, globalId++));
+    }
+
+    function createChild(title, description, id){
+        const child = document.createElement("div");
+        const firstGrandChild = document.createElement("div");
+        const secondGrandChild = document.createElement("div");
+        const thirdGrandChild = document.createElement("button");
+        firstGrandChild.innerHTML = title;
+        secondGrandChild.innerHTML = description;
+        thirdGrandChild.innerHTML = "Mark as Done";
+        thirdGrandChild.setAttribute("onclick", `markAsDone(${id})`);
+        child.setAttribute("id", id);
+        child.appendChild(firstGrandChild);
+        child.appendChild(secondGrandChild);
+        child.appendChild(thirdGrandChild);
+        return child;
+    }
+
+    function markAsDone(id){
+        const parent = document.getElementById(id);
+        parent.children[2].innerHTML = "Done!";
+    }
+
+    // update
+
+    function updateDomAccToState(state){
+        document.getElementById("container");
+        for(let i = 0; i<state.length; i++){
+            const child = createChild(state[i].title, state[i].description, state[i].id);
+            parent.appendChild(child);
+        }
+    }
+    updateDomAccToState([{
+        title: "go to gym",
+        description: "go to gym from 5-7",
+        id: 1
+    }]);
+  </script>
+
+</html>
