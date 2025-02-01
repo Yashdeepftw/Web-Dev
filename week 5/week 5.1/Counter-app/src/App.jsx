@@ -21,6 +21,7 @@ function App() {
   // }
   return (
     <div>
+      <button onClick={addTodos}>Add a random Todo</button> 
       {todos.map((todo) => {
         return <Todo title={todo.title} description={todo.description} />
       })}
@@ -28,6 +29,12 @@ function App() {
       {/* <CustomButton count={count} setCount={setCount}></CustomButton> */}
     </div>
   )
+  function addTodos(){
+    setTodos([...todos, {
+      title: "new Todo",
+      description: "description of new todo"
+    }])
+  }
 }
 
 function CustomButton(props){
@@ -38,6 +45,7 @@ function CustomButton(props){
     Counter {props.count}
   </button>
 }
+
 
 function Todo(props){
   return <div>
