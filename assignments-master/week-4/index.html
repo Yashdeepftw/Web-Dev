@@ -8,7 +8,7 @@
     let oldTodoState = [];
 
     function addTodoToDom() {
-      
+          
     }
 
     function removeTodoFromDom(todo) {
@@ -28,6 +28,36 @@
       const added = [];
       const deleted = [];
       const updated = [];
+      newTodos.forEach((newTodo) => {
+        const oldTodoIndex = oldTodoState.findIndex((oldTodo) => {
+          if (oldTodo.id === newTodo.id) {
+            added.push(newTodo);
+          }
+          else {
+            const oldTodo = oldTodoState[oldTodoIndex];
+            if(oldTodo.title !== newTodo.title ||
+              oldTodo.description !== newTodo.description
+            ) {
+              updated.push(newTodo);
+            }
+          }
+        });
+
+        oldTodoState.forEach((oldTodo) => {
+          const isDeleted = newTodos.forEach((newTodo) => {
+            newTodo.id !== oldTodo.id
+          });
+          if(isDeleted) {
+            deleted.push(oldTodo)
+          }
+        });
+
+        added.forEach(addTodoToDom);
+        deleted.forEach(removeTodoFromDom);
+        update.forEach(({oldTodo, newTodo}) => {
+          updateTodoInDom
+        });
+      })
       // calculate these 3 arrays
       // call addTodo, removeTodo, updateTodo functions on each of the
       // elements

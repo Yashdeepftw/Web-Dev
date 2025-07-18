@@ -9,7 +9,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   useEffect( () => {
     fetch("https://sum-server.100xdevs.com/todos")
-    .then(async (res) {
+    .then(async (res) => {
       const json = await res.json();
       setTodos(json);
     })
