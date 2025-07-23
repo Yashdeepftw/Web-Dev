@@ -8,7 +8,7 @@
 
 
 const mongo = require("mongoose");
-mongo.connect('mongodb+srv://admin:uxMK2yOtC6oMzM6a@cluster0.3urzi.mongodb.net/react-app');
+mongo.connect('mongodb+srv://admin:uxMK2yOtC6oMzM6a@cluster0.3urzi.mongodb.net/');
 const todoSchema = mongo.Schema({
     title: String,
     description: String,
