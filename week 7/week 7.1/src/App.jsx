@@ -1,7 +1,8 @@
-import './App.css'
+import './App.css';
+import { lazy } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
-import { Dashboard } from '../components/Dashboard'
-import { Landing } from '../components/Landing'
+const Landing = lazy(() => import('../components/Landing'))
+const Dashboard = lazy(() => import('../components/Dashboard'))
 
 function App() {
 
