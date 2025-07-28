@@ -20,8 +20,8 @@ const Counter = () => {
     <div>
       <h1>Count: {count}</h1>
       <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      {isEven && <p>It is EVEN</p>}
+      <button onClick={handleDecrease}>Decrease</button> <br />
+      {isEven ? null : 'it is even'}
     </div>
   );
 };
