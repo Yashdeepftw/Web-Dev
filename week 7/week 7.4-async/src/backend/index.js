@@ -14,7 +14,7 @@ app.get('/notifications', (req, res) => {
 
         messaging: Math.floor(Math.random() * 7),
 
-        notifications: Math.floor(Math.random() * 100)
+        notifications: Math.floor(Math.random() * 120)
     };
 
     res.json(notifications);
