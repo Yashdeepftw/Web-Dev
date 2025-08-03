@@ -5,6 +5,7 @@ const User = require("../db")
 const zod = require("zod");
 const jwt = require('jsonwebtoken');
 const jwt_secret = require('../config');
+const { authMiddleware } = require('../middlewares/middlewares');
 
 const signupBody = zod.object({
     username: zod.string().email(),
@@ -80,6 +81,55 @@ app.post('/signin', async (req, res) => {
     
     res.status(411).json({
         message: 'Error while logging in'
+    })
+})
+
+app.put('/', authMiddleware, async (req, res) => {
+    const updateBody = zod.object({
+        password: zod.string().optional(),
+        firstName: zod.string().optional(),
+        lastName: zod.string().optional()
+    });
+
+    const { success } = updateBody.safeParse(req.body);
+
+    if(!success) {
+        res.status(411).json({
+            msg: 'Error while updating the information'
+        })
+    }
+    
+    await User.updateOne(req.body, {
+        _id: req.userId
+    })
+
+    res.json({
+        msg: 'Updated Successfully'
+    })
+})
+
+app.get('/bulk', async (req, res) => {
+    const filter = req.query.filter || "";
+
+    const users = await User.find({
+        $or: [{
+            firstName: {
+                "$regex": filter
+            }
+        }, {
+            lastName: {
+                "$regex": filter
+            }
+        }]
+    })
+
+    res.json({
+        user: users.map(user => ({
+            userName: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
     })
 })
 
