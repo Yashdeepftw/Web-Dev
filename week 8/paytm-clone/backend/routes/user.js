@@ -1,11 +1,11 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 const { User, Account } = require("../db")
 const zod = require("zod");
 const jwt = require('jsonwebtoken');
 const jwt_secret = require('../config');
 const { authMiddleware } = require('../middlewares/middlewares');
+router.use(express.json());
 
 const signupBody = zod.object({
     username: zod.string().email(),
@@ -16,18 +16,20 @@ const signupBody = zod.object({
 
 router.post('/signup', async (req, res) => {
     const { success } = signupBody.safeParse(req.body)
-    if(!success) {
+    if(success) {
         return res.status(411).json({
             message: "Email already taken / Incorrect inputs"
         })
     }
 
+    console.log(req.body);
     const  existingUser = await User.findOne({
         username: req.body.username
     })
+    console.log('Existing user found:', existingUser);
     if(existingUser) {
         return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
+            message: "Email already taken"
         })
     }
 
@@ -57,8 +59,8 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
     const signinBody = zod.object({
-        username: string().email(),
-        password: string()
+        username: zod.string().email(),
+        password: zod.string()
     })
 
     const { success } = signinBody.safeParse(req.body);

@@ -59,6 +59,4 @@ router.post('/transfer', authMiddleware, async (req, res) => {
         msg: 'Transfer successful'
     });
 });
-module.exports = {
-    router
-}
+module.exports = router;
