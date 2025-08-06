@@ -11,7 +11,7 @@ db.once('open', () => {
 });
 
 const userSchema = new mongoose.Schema({
-    userName: String,
+    username: String,
     password: String,
     lastName: String,
     firstName: String

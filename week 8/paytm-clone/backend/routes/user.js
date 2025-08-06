@@ -62,21 +62,20 @@ router.post('/signin', async (req, res) => {
         username: zod.string().email(),
         password: zod.string()
     }).passthrough();
-      console.log('Incoming body:', req.body);
 
     const { success } = signinBody.safeParse(req.body);
-    console.log('Zod result:', success);
+
     if(!success) {
         res.status(411).json({
             message: "Incorrect inputs"
         })
     }
 
-    const user = await User.find({
+    const user = await User.findOne({
         username: req.body.username,
         password: req.body.password
     })
-    console.log(user);
+    
     if(user) {
         const token = jwt.sign({
             userId: user._id
@@ -135,7 +134,7 @@ router.get('/bulk', async (req, res) => {
 
     res.json({
         user: users.map(user => ({
-            userName: user.userName,
+            username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
             _id: user._id
