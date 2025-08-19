@@ -1,18 +1,31 @@
 
 import { useEffect, useState } from 'react'
 import './App.css'
+import axios from 'axios'
 
-function useTodos() {
+function useTodos(n) {
   const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  
 
   useEffect(() => {
-    axios.get("http://localhost:3000")
-      .then((res) => {
-        setTodos(res.data.todos);
-      })
+    setTimeout(() => {
+      axios.get("http://localhost:3000/todo")
+        .then((res) => {
+          setTodos(res.data.todos);
+          setLoading(false);
+        })
+    }, n*1000)
+
+    axios.get("http://localhost:3000/todo")
+        .then((res) => {
+          setTodos(res.data.todos);
+          setLoading(false);
+        })
   }, [])
 
-  return todos;
+  return {todos, loading};
 }
 
 function Track({ todos }) {
@@ -25,11 +38,11 @@ function Track({ todos }) {
 
 function App() {
 
-  const todos = useTodos();
+  const {todos, loading} = useTodos(5);
 
   return (
     <>
-      {todos.map(todo => <Track todos={todo} />)}
+    {loading ? <div>Loading... </div> : todos.map(todo => <Track key={todo._id} todos={todo} />) }
     </>
   )
 
