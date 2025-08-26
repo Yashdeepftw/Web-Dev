@@ -4,8 +4,8 @@ const cors = require('cors');
 
 const mainRouter = require('./routes/index');
 
-app.use('/api/v1', mainRouter);
 app.use(cors());
+app.use('/api/v1', mainRouter);
 app.use(express.json());
 
 app.listen(3000, () => {
