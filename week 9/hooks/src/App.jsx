@@ -3,48 +3,62 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
 
-function useTodos(n) {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  
-
-  useEffect(() => {
-    setInterval(() => {
-      axios.get("http://localhost:3000/todos/new")
-        .then((res) => {
-          setTodos(res.data);
-          setLoading(false);
-        })
-    }, n*1000)
-
-    axios.get("http://localhost:3000/todos/new")
-        .then((res) => {
-          setTodos(res.data);
-          setLoading(false);
-        })
-  }, [n])
-
-  return {todos, loading};
-}
-
-function Track({ todos }) {
-  return <div>
-    {todos.title} 
-    <br />
-    {todos.description}
-  </div>
-}
-
 function App() {
-
-  const {todos, loading} = useTodos(5);
+  const isOnline = useIsOnline();
 
   return (
-    <>
-    {loading ? <div>Loading... </div> : todos.map(todo => <Track key={todo._id} todos={todo} />) }
-    </>
+  <>
+  {isOnline ? <div>You are Online</div> : <div>You are Offline</div>}
+  </>
   )
+}
+
+// custom hook
+
+// function useTodos(n) {
+//   const [todos, setTodos] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const value = setInterval(() => {
+//       axios.get("http://localhost:3000/todos/new")
+//         .then((res) => {
+//           setTodos(res.data);
+//           setLoading(false);
+//         })
+//     }, n*1000)
+
+//     axios.get("http://localhost:3000/todos/new")
+//         .then((res) => {
+//           setTodos(res.data);
+//           setLoading(false);
+//         })
+//         return () => {
+//           clearInterval(value);
+//         }
+//   }, [n])
+
+//   return {todos, loading};
+// }
+
+// function Track({ todos }) {
+//   return <div>
+//     {todos.title} 
+//     <br />
+//     {todos.description}
+//   </div>
+// }
+
+// function App() {
+
+//   const {todos, loading} = useTodos(5);
+
+//   return (
+//     <>
+//     {loading ? <div>Loading... </div> : todos.map(todo => <Track key={todo._id} todos={todo} />) }
+//     </>
+//   )
+
 
 //   const [render, setRender] = useState(true);
 //   useEffect(() => {
