@@ -10,20 +10,20 @@ function useTodos(n) {
   
 
   useEffect(() => {
-    setTimeout(() => {
-      axios.get("http://localhost:3000/todo")
+    setInterval(() => {
+      axios.get("http://localhost:3000/todos/new")
         .then((res) => {
-          setTodos(res.data.todos);
+          setTodos(res.data);
           setLoading(false);
         })
     }, n*1000)
 
-    axios.get("http://localhost:3000/todo")
+    axios.get("http://localhost:3000/todos/new")
         .then((res) => {
-          setTodos(res.data.todos);
+          setTodos(res.data);
           setLoading(false);
         })
-  }, [])
+  }, [n])
 
   return {todos, loading};
 }
