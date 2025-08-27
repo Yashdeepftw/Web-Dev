@@ -3,15 +3,52 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
 
+function useDebounce(value, timeout) {
+  const [debounceValue, setDebounceValue] = useState(value);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDebounceValue(value)
+    }, timeout)
+  }, [value])
+  return debounceValue;
+}
+
 function App() {
-  const isOnline = useIsOnline();
+  const [inputValue, setInputValue] = useState('');
+  const debounceValue = useDebounce(inputValue, 1000);
 
   return (
-  <>
-  {isOnline ? <div>You are Online</div> : <div>You are Offline</div>}
-  </>
+    <>
+    Debounced Value is {debounceValue}
+    <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder='Search' />
+    </>
   )
 }
+
+// function useIsOnline() {
+//   const [isOnline, setIsOnline] = useState(window.navigator.onLine);
+
+//   useEffect(() => {
+//     window.addEventListener('online', () => {
+//       setIsOnline(true);
+//     })
+//     window.addEventListener('offline', () => {
+//       setIsOnline(false);
+//     })
+//   }, [])
+  
+//   return isOnline;
+// }
+// function App() {
+//   const isOnline = useIsOnline();
+
+//   return (
+//   <>
+//   {isOnline ? <div>You are Online</div> : <div>You are Offline</div>}
+//   </>
+//   )
+// }
 
 // custom hook
 
@@ -88,6 +125,6 @@ function App() {
 //   return <div>
 //     from the inside of the element
 //   </div>
-}
+// }
 
 export default App
