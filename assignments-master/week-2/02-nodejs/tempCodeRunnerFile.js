@@ -1,4 +1,4 @@
-("/file/:filename",(req,res) =>{
+// ("/file/:filename",(req,res) =>{
 //   const fileName = path.join(__dirname ,'./files/',req.params.filename);
 //   fs.readFile(fileName,'utf-8',(err,data)=>{
 //     if(err){
