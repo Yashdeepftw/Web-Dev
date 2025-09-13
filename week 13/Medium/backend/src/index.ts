@@ -41,15 +41,40 @@ app.post('/api/v1/signup', async (c) => {
   }
   catch(e) {
     c.status(403);
-    console.log(e);
     return c.json({error: 'error while signup'});
   }
 });
 
-app.post('/api/v1/signin', (c) => {
-  return c.json({
-    msg: 'signin page'
-  })
+app.post('/api/v1/signin', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const body = await c.req.json();
+  
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: body.email
+      }
+    });
+
+    if(!user) {
+      c.status(403);
+      return c.json({ error: 'user not found'});
+    }
+
+    const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
+
+    return c.json({
+      msg: 'signin is successful',
+      jwt
+    })
+  }
+  catch (e) {
+    c.status(403);
+    return c.json({error: 'error while signin'});
+  }
 });
 
 app.post('/api/v1/blog', (c) => {
