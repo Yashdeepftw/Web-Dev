@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 
 export const blogRouter = new Hono<{
@@ -10,23 +12,100 @@ export const blogRouter = new Hono<{
     }
 }>();
 
-blogRouter.get('/api/v1/blog/:id', (c) => {
-    const id = c.req.param('id');
-    console.log(id);
-    return c.text('Hello Hono!')
+blogRouter.get('/:id', async (c) => {
+    // const id = c.req.param('id');
+    const id = c.get('userId')
+    console.log(id)
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+
+    try {
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: id
+            }
+        })
+        if(!posts) {
+            return c.json({
+                msg: 'no posts available'
+            })
+        }
+        return c.json({
+            msg: 'posts are',
+            posts
+        })
+    }
+    catch(e) {
+        console.log(e)
+        c.status(401);
+        return c.json({
+            msg: "error in finding posts"
+        })
+    }
 })
 
 
 
 blogRouter.post('/post',  async (c) => {
-    
-    return c.json({
-        msg: 'blog page'
-    })
+    const userId = c.get('userId')
+    console.log(userId);
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+    const body = await c.req.json();
+
+    try {
+        const post = await prisma.post.create({
+            data: {
+                title: body.title,
+                content: body.content,
+                published: body.published,
+                authorId: userId
+            }
+        });
+        return c.json({
+            msg: 'post created successful',
+            id: post.id
+        })
+    }
+    catch (e) {
+        c.status(403);
+        console.log(e);
+        return c.json({
+            msg: 'error in post creation'
+        })
+    }
 });
 
-blogRouter.put('/api/v1/blog', (c) => {
-    return c.json({
-        msg: 'blog put page'
-    })
+blogRouter.put('/update', async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+
+    const body = await c.req.json();
+    const id = c.get('userId');
+
+    try {
+        const post = await prisma.post.update({
+            where: {
+                id: body.id,
+                authorId: id,
+            },
+            data: {
+                content: body.content,
+                title: body.title
+            }
+        })
+        return c.json({
+            msg: 'post updated'
+        })
+    }
+    catch(e) {
+        c.status(401);
+        return c.json({
+            msg: 'error in updating the post'
+        })
+    }
 });
