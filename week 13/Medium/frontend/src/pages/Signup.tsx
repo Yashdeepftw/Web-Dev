@@ -47,7 +47,7 @@ export const Signup = () => {
                         try {
                             const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
                             const jwt = res.data.jwt;
-                            localStorage.setItem("Authorization", jwt);
+                            localStorage.setItem("Authorization", `Bearer ${jwt}`);
                             navigate('/blog')
                         }
                         catch(e) {

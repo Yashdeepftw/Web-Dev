@@ -73,7 +73,8 @@ userRouter.post('/signin', async (c) => {
         const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
 
         return c.json({
-            msg: 'signin is successful' + `Token for header is ${jwt}`
+            msg: 'signin is successful',
+            jwt
         })
     }
     catch (e) {
