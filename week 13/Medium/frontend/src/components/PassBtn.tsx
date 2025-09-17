@@ -1,12 +1,15 @@
+import { ChangeEvent } from "react"
+
 interface PropsTypes {
     label: string,
     placeholder: string,
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 export const PassBtn = (props: PropsTypes) => {
     return (
         <div className="h-[140px] w-full  ">
             <p className="font-[poppins] font-extralight text-[16px]">{props.label}</p>
-            <input type="password" className="border-[1px] border-[#666666] rounded-[10px] w-full h-[56px] placeholder:text-[#333333]/50 " placeholder={props.placeholder } />
+            <input type="password" className="border-[1px] border-[#666666] rounded-[10px] w-full h-[56px] placeholder:text-[#333333]/50 " placeholder={props.placeholder } onChange={props.onChange}/>
             <div className="h-[74px] w-full flex justify-between pt-[15px]">
                 <div className="">
                     <ul className=" px-[20px] list-disc font-[poppins] font-extralight text-[15px]">
