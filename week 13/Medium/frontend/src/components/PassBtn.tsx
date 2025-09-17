@@ -1,4 +1,8 @@
-export const PassBtn = (props: any) => {
+interface PropsTypes {
+    label: string,
+    placeholder: string,
+}
+export const PassBtn = (props: PropsTypes) => {
     return (
         <div className="h-[140px] w-full  ">
             <p className="font-[poppins] font-extralight text-[16px]">{props.label}</p>
