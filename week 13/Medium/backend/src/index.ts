@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { verify } from 'hono/jwt';
 import { userRouter } from '../routes/user';
 import { blogRouter } from '../routes/blog';
+import { cors } from 'hono/cors'
 
 
 const app = new Hono<{
@@ -15,6 +16,7 @@ const app = new Hono<{
 }>();
 
 // Middlewares
+app.use('/api/*', cors());
 app.use("/api/v1/blog/*", async (c, next) => {
   try{
     const jwt = c.req.header("Authorization");
