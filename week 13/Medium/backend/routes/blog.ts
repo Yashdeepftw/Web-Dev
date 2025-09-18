@@ -13,23 +13,63 @@ export const blogRouter = new Hono<{
     }
 }>();
 
-blogRouter.get('/:id', async (c) => {
-    // const id = c.req.param('id');
-    const id = c.get('userId')
-    console.log(id)
+blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate());
-
     try {
-        const posts = await prisma.post.findMany({
+        const blogs = await prisma.post.findMany({
+            select: {
+                title: true,
+                content: true,
+                id: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
+        return c.json({
+            blogs
+        })
+    }
+    catch (e) {
+        c.status(404);
+        console.log(e);
+        return c.json({
+            msg: 'error in finding posts'
+        })
+    }
+})
+
+blogRouter.get('/:id', async (c) => {
+    const postid = c.req.param('id');
+    const id = c.get('userId')
+    // console.log(id)
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+    // console.log(postid);
+    try {
+        const posts = await prisma.post.findFirst({
             where: {
-                authorId: id
+                authorId: id,
+                id: postid
+            },
+            select: {
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
         if(!posts) {
             return c.json({
-                msg: 'no posts available'
+                msg: 'no posdts available'
             })
         }
         return c.json({
@@ -92,10 +132,10 @@ blogRouter.put('/update', async (c) => {
 
     const body = await c.req.json();
     const { success } = updatePostInput.safeParse(body);
-        if(!success) {
-            c.status(400);
-            return c.json({ error: 'Invalid Inputs'});  
-        }
+    if(!success) {
+        c.status(400);
+        return c.json({ error: 'Invalid Inputs'});  
+    }
     const id = c.get('userId');
 
     try {
