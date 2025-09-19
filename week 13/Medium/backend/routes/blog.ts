@@ -54,7 +54,7 @@ blogRouter.get('/:id', async (c) => {
     try {
         const posts = await prisma.post.findFirst({
             where: {
-                authorId: id,
+                // authorId: id,
                 id: postid
             },
             select: {
@@ -69,7 +69,7 @@ blogRouter.get('/:id', async (c) => {
         })
         if(!posts) {
             return c.json({
-                msg: 'no posdts available'
+                msg: 'no posts available'
             })
         }
         return c.json({
