@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BlogCard } from "../components/Blogcard"
 import { useBlogs } from "../hooks/useBlogs"
+import { useEffect } from "react";
 
 export const  Blog = () => {
     const { loading, blogs } = useBlogs();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("Authorization");
+        if (!token) {
+            alert("You are not logged in!");
+            navigate("/");
+        }
+    }, [Navigate]);
 
     if(loading) {
         return (
