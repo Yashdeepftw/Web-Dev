@@ -6,6 +6,7 @@ import { Blog } from './pages/Blog'
 import './App.css'
 import { Root } from './pages/Root'
 import { GetPost } from './pages/GetPost'
+import { Post } from './pages/Post'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/signin' element={<Signin />} />
           <Route path='/blog' element={<Blog />} />
           <Route path='/get/:id' element={<GetPost />} />
+          <Route path='/post' element={<Post />} />
         </Routes>
       </BrowserRouter>
     </>
