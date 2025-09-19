@@ -25,6 +25,9 @@ export const  Blog = () => {
             All Blogs
         </h1>  
         {blogs.map( blog => <BlogCard authorname={blog.author.name || "Anonymous"} title={blog.title} content={blog.content} key={blog.id} id={blog.id} />)}
-        <Link to={'/post'} className="absolute right-[50px] top-[50px] text-xl font-[poppins] font-medium bg-green-400 rounded-[30px] p-4">Post a blog</Link>
+        <Link to={'/post'} className="absolute right-[50px] top-[60px] text-sm  font-medium bg-green-700 rounded-lg p-2 px-4 text-white focus:ring-4 focus:ring-green-200  hover:bg-green-800">Post a blog</Link>
+        <Link to={'/'} className="absolute right-[50px] top-[120px] text-sm  font-medium bg-red-700 rounded-lg p-2 px-4 text-white focus:ring-4 focus:ring-red-200  hover:bg-red-800" onClick={() => {
+            localStorage.removeItem('Authorization')
+        }}>Log Out</Link>
     </div>
 }
