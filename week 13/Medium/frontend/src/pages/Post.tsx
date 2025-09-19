@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config"
 import { useState } from "react"
 
@@ -9,7 +9,7 @@ export const Post = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <div className="flex  flex-col items-center gap-4"> 
+            <div className="flex  flex-col items-center gap-4 relative h-[100vh] bg-[#f7f4ed]"> 
                     <div className="h-[50px] w-full  border-b px-[100px] flex justify-between items-center">
                         <div className=" h-full w-[100px] flex items-center">
                             <Link to={'/'}><h1 className="font-[medium-content-sans-serif-font, -apple-system, BlinkMacSystemFont, Segoe-UI, Roboto, Oxygen, Ubuntu, Cantarell, Open-Sans, Helvetica-Neue, sans-serif] font-extrabold text-[24px] ">Medium</h1></Link>
@@ -21,13 +21,13 @@ export const Post = () => {
                 <div className="max-w-screen-lg w-full gap-6 flex flex-col">
                     <div>
                         <label htmlFor="message" className="block mb-2 text-lg font-medium text-gray-900 ">Title</label>
-                        <textarea id="message" rows={2} className="block p-2.5 w-full text-sm text-slate-700 bg-gray-50 rounded-lg border border-gray-300 focus:ring-slate-500 focus:border-slate-500 " placeholder="Write your thoughts here..." onChange={(e) => {
+                        <textarea id="message" rows={2} className="block p-2.5 w-full text-sm text-slate-700 bg-[#efece6] rounded-lg border border-gray-300 focus:ring-slate-500 focus:border-slate-500 " placeholder="Write your thoughts here..." onChange={(e) => {
                             setTitle(e.target.value)
                         }}></textarea>
                     </div>
                     <div>
                         <label htmlFor="message" className="block mb-2 text-lg font-medium text-gray-900 ">Your message</label>
-                        <textarea id="editor" rows={10} className="block p-2.5 w-full  text-sm text-gray-800 bg-gray-50 border-1  focus:ring-0 rounded-lg  border-gray-300" placeholder="Write an article..." required onChange={(e) => {
+                        <textarea id="editor" rows={10} className="block p-2.5 w-full  text-sm text-gray-800 bg-[#efece6] border-1  focus:ring-0 rounded-lg  border-gray-300" placeholder="Write an article..." required onChange={(e) => {
                             setContent(e.target.value)
                         }} ></textarea>
                     </div>
@@ -46,8 +46,10 @@ export const Post = () => {
                             Publish post
                         </button>
                     </div>
-                    
                 </div>
+                <Link to={'/blog'}>
+                    <button className="absolute right-[50px] top-[70px] border p-2 px-[15px] bg-green-700 text-white border-green-700 rounded-lg hover:bg-green-800 focus:ring-green-200 focus:ring-4">All Blogs</button>
+                </Link>
             </div>
         </div>
     )
