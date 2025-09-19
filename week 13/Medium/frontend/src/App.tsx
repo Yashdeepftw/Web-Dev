@@ -7,20 +7,23 @@ import './App.css'
 import { Root } from './pages/Root'
 import { GetPost } from './pages/GetPost'
 import { Post } from './pages/Post'
+import { DesktopOnly } from './pages/Desktop'
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Root />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/blog' element={<Blog />} />
-          <Route path='/get/:id' element={<GetPost />} />
-          <Route path='/post' element={<Post />} />
-        </Routes>
+      <DesktopOnly> 
+          <Routes>
+            <Route path='/' element={<Root />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/signin' element={<Signin />} />
+            <Route path='/blog' element={<Blog />} />
+            <Route path='/get/:id' element={<GetPost />} />
+            <Route path='/post' element={<Post />} />
+          </Routes>
+        </DesktopOnly>
       </BrowserRouter>
     </>
   )
