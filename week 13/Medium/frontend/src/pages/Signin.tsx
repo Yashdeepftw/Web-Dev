@@ -14,7 +14,6 @@ export const Signin = () => {
     })
     return (
         <div className="flex justify-center items-center h-screen w-screen">
-        
             <div className="w-[600px] h-[470px] border-[#666666]/60 border-[1px] rounded-[32px]">
                 <div className="flex flex-col items-center mt-[25px]">
                     <h2 className="font-[poppins] font-medium text-[28px] text-[#333333]">Signin an Account</h2>
@@ -50,6 +49,9 @@ export const Signin = () => {
                     </div>
                 </div>
             </div>
+            <Link to={'/'}>
+                <button className="absolute right-[50px] top-[70px] border p-2 px-[15px] bg-green-700 text-white border-green-700 rounded-lg hover:bg-green-800 focus:ring-green-200 focus:ring-4">Go to Home</button>
+            </Link>
         </div>
     )
 }
