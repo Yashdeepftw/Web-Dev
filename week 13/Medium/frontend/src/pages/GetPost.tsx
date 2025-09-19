@@ -12,7 +12,7 @@ export const GetPost = () => {
         )
     }
     return (
-        <div className="h-screen w-screen bg-[#f7f4ed] flex flex-col items-center overflow-auto gap-10">
+        <div className="h-screen w-screen bg-[#f7f4ed] flex flex-col items-center overflow-auto gap-10 relative">
             <div className="h-[50px] w-full  border-b px-[100px] flex justify-between items-center">
                 <div className=" h-full w-[100px] flex items-center">
                     <Link to={'/'}>
@@ -43,6 +43,9 @@ export const GetPost = () => {
                     </div>
                 </div>
             </div>
+            <Link to={'/blog'}>
+                <button className="absolute right-[50px] top-[70px] border p-2 px-[15px] bg-green-700 text-white border-green-700 rounded-lg hover:bg-green-800 focus:ring-green-200 focus:ring-4">All Blogs</button>
+            </Link>
         </div>
     )
 }
