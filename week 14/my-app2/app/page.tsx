@@ -1,9 +1,9 @@
 import axios from "axios";
-import Image from "next/image";
+// async component
 
 export default async function  Home() {
   async function getUserDetails() {
-    const response = await axios.get('<https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details>');
+    const response = await axios.get("");
     return response.data;
   }
   const userData = await getUserDetails();
